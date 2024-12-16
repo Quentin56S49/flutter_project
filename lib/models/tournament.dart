@@ -10,10 +10,10 @@ class Tournament {
   List<Game> games;
   List<Match> matches;
 
-  Tournament(
-    this.id,
-    this.title,
-    this.description, {
+  Tournament({
+    required this.id,
+    required this.title,
+    required this.description,
     required this.date,
     this.players = const [],
     this.games = const [],

@@ -3,15 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/blocs/game_cubit.dart';
 import 'package:flutter_project/blocs/tournament_cubit.dart';
 import 'package:flutter_project/models/tournament.dart';
+import 'package:flutter_project/service/tournament_service.dart';
 import 'package:flutter_project/ui/screens/search_game_page.dart';
 import 'package:flutter_project/ui/screens/tournament_detail.dart';
 import 'package:flutter_project/ui/screens/tournament_page.dart';
 
 void main() {
-  final TournamentCubit tournamentCubit = TournamentCubit();
+  final TournamentCubit tournamentCubit = TournamentCubit(TournamentService());
   final GameCubit gameCubit = GameCubit();
-
-  tournamentCubit.loadTournaments();
 
   runApp(
     MultiBlocProvider(

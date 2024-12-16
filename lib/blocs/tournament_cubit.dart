@@ -1,24 +1,28 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
 import 'package:flutter_project/models/tournament.dart';
 import 'package:flutter_project/service/tournament_service.dart';
 
 class TournamentCubit extends Cubit<List<Tournament>> {
-  TournamentCubit() : super([]);
+  final TournamentService _tournamentService;
 
-  Future<void> createTournament(Tournament tournament) async {
-    //await _tournamentRepository.createTournament(tournament);
+  TournamentCubit(this._tournamentService) : super([]);
+
+  Future<void> fetchTournaments() async {
+    try {
+      final tournaments = await _tournamentService.getTournaments();
+      emit(tournaments);
+    } catch (e) {
+      emit([]);
+    }
   }
 
-  Future<void> updateTournament(Tournament tournament) async {
-    //await _tournamentRepository.updateTournament(tournament);
-  }
-
-  Future<void> deleteTournament(Tournament tournament) async {
-    //await _tournamentRepository.deleteTournament(tournament);
-  }
-
-  Future<void> loadTournaments() async {
-    final List<Tournament> tournaments = TournamentService().getTournaments();
-    emit(tournaments);
+  Future<void> addTournament(Tournament tournament) async {
+    try {
+      await _tournamentService.addTournament(tournament);
+      final updatedTournaments = List<Tournament>.from(state)
+        ..add(tournament);
+      emit(updatedTournaments);
+    } catch (e) {
+    }
   }
 }

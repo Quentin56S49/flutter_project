@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_project/blocs/game_cubit.dart';
 import 'package:flutter_project/blocs/tournament_cubit.dart';
+import 'package:flutter_project/ui/screens/search_game_page.dart';
 import 'package:flutter_project/ui/screens/tournament_page.dart';
 
 void main() {
   final TournamentCubit tournamentCubit = TournamentCubit();
+  final GameCubit gameCubit = GameCubit();
 
   tournamentCubit.loadTournaments();
 
   runApp(
-    BlocProvider<TournamentCubit>(
-      create: (_) => tournamentCubit,
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => tournamentCubit),
+        BlocProvider(create: (_) => gameCubit),
+      ],
       child: const MyApp(),
     ),
   );
@@ -27,7 +33,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: TournamentPage(),
+      initialRoute: '/search-game',
+      routes: {
+        '/': (context) => const TournamentPage(),
+        '/search-game': (context) => const SearchGamePage(),
+      },
     );
   }
 }

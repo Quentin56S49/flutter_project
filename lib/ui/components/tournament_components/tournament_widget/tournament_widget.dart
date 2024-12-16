@@ -50,7 +50,8 @@ class TournamentWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  //Navigator.pushNamed(context, '/tournament/${tournament.id}');
+                  Navigator.pushNamed(context, '/detail-tournament',
+                      arguments: tournament);
                 },
                 child: const Icon(Icons.arrow_forward_ios),
               )

@@ -19,10 +19,10 @@ class TournamentCubit extends Cubit<List<Tournament>> {
   Future<void> addTournament(Tournament tournament) async {
     try {
       await _tournamentService.addTournament(tournament);
-      final updatedTournaments = List<Tournament>.from(state)
-        ..add(tournament);
+      final updatedTournaments = List<Tournament>.from(state)..add(tournament);
       emit(updatedTournaments);
     } catch (e) {
+      emit(state);
     }
   }
 }

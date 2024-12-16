@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class GameService {
-  final String _clientId = 'YOUR_CLIENT_ID';
-  final String _accessToken = 'YOUR_ACCESS_TOKEN';
+  final String _clientId = 'icz03eibbfev4o2ibbpncbus59eik3';
+  final String _accessToken = 'g2lyhbi0hwvk7lsqwnqt18fqm7bj3r';
 
   Future<List<Game>> fetchGames(String query) async {
     final url = Uri.parse('https://api.igdb.com/v4/games');
@@ -15,10 +15,10 @@ class GameService {
         'Authorization': 'Bearer $_accessToken',
         'Content-Type': 'application/json',
       },
-      body: jsonEncode({
-        'search': query,
-        'fields': 'name,summary',
-      }),
+      body: '''
+        search "$query";
+        fields name,summary,cover.image_id;
+      ''',
     );
 
     if (response.statusCode == 200) {

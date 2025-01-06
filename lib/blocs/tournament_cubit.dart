@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/models/game.dart';
+import 'package:flutter_project/models/player.dart';
 import 'package:flutter_project/models/tournament.dart';
 
 class TournamentCubit extends Cubit<Tournament> {
@@ -11,7 +12,13 @@ class TournamentCubit extends Cubit<Tournament> {
 
   void addGame(Game game) {
     final updatedGames = List<Game>.from(state.games)..add(game);
-    final updatedTournament = state.copyWith(games: updatedGames);
+    final updatedTournament = state.copyWithGames(games: updatedGames);
+    emit(updatedTournament);
+  }
+
+  void addPlayer(Player player){
+    final updatedPlayers = List<Player>.from(state.players)..add(player);
+    final updatedTournament = state.copyWithPlayers(players: updatedPlayers);
     emit(updatedTournament);
   }
 }

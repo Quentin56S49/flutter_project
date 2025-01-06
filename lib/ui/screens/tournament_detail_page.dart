@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/models/tournament.dart';
+import 'package:flutter_project/ui/components/tournament_components/add_player_widget/add_player_widget.dart';
 import '../components/tournament_components/add_games_widget/add_game_widget.dart';
-import 'add_player_page.dart';
 
 class TournamentDetail extends StatelessWidget {
   final Tournament tournament;
@@ -30,38 +30,7 @@ class TournamentDetail extends StatelessWidget {
             ),
           ),
           AddGameWidget(),
-          SizedBox(height: 16.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddPlayerPage(),
-                    ),
-                  );
-                },
-                child: Text(
-                  'Ajouter un joueur',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          AddPlayerWidget(), // AddPlayerWidget est ici
         ],
       ),
     );

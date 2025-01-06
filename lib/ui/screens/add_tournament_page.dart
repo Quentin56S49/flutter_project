@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/models/tournament.dart';
+
 import '../../blocs/tournaments_cubit.dart';
 
 class AddTournamentPage extends StatefulWidget {
@@ -18,7 +18,10 @@ class _AddTournamentScreenState extends State<AddTournamentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Ajouter des tournois')),
+      appBar: AppBar(
+        title: Text('Ajouter des tournois'),
+        backgroundColor: Colors.deepPurple,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

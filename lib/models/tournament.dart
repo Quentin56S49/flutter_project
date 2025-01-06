@@ -28,7 +28,19 @@ class Tournament {
     games.add(game);
   }
 
-  copyWith({required List<Game> games}) {
+  copyWithGames({required List<Game> games}) {
+    return Tournament(
+      id: id,
+      title: title,
+      description: description,
+      date: date,
+      players: players,
+      games: games,
+      matches: matches,
+    );
+  }
+
+  copyWithPlayers({required List<Player> players}) {
     return Tournament(
       id: id,
       title: title,

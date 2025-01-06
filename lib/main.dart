@@ -5,6 +5,7 @@ import 'package:flutter_project/blocs/tournament_cubit.dart';
 import 'package:flutter_project/blocs/tournaments_cubit.dart';
 import 'package:flutter_project/models/tournament.dart';
 import 'package:flutter_project/service/tournament_service.dart';
+import 'package:flutter_project/ui/screens/add_player_page.dart';
 import 'package:flutter_project/ui/screens/search_game_page.dart';
 import 'package:flutter_project/ui/screens/tournament_detail_page.dart';
 import 'package:flutter_project/ui/screens/tournament_page.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const TournamentPage(),
         '/search-game': (context) => const SearchGamePage(),
+        '/add-player' : (context) => const AddPlayerPage(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/detail-tournament') {

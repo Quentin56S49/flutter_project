@@ -6,7 +6,8 @@ class Match {
   Game game;
   List<Player> players;
   Tournament tournament;
-  Map<Player, int> score = {};
+  String description;
+  Player vainqueur;
 
-  Match({required this.game, required this.players, required this.tournament});
+  Match({required this.game, required this.players, required this.tournament, required this.description, required this.vainqueur});
 }

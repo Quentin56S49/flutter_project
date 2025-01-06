@@ -3,6 +3,7 @@ import 'package:flutter_project/models/tournament.dart';
 
 class TournamentWidget extends StatelessWidget {
   final Tournament tournament;
+
   const TournamentWidget({super.key, required this.tournament});
 
   @override
@@ -55,6 +56,8 @@ class TournamentWidget extends StatelessWidget {
                 },
                 child: const Icon(Icons.arrow_forward_ios),
               )
-            ]));
+            ]
+        )
+    );
   }
 }

@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/models/tournament.dart';
-import '../../blocs/tournament_cubit.dart';
+import '../../blocs/tournaments_cubit.dart';
 
 class AddTournamentPage extends StatefulWidget {
+  const AddTournamentPage({super.key});
+
   @override
   _AddTournamentScreenState createState() => _AddTournamentScreenState();
 }
@@ -77,7 +79,10 @@ class _AddTournamentScreenState extends State<AddTournamentPage> {
                         description: _descriptionController.text,
                         date: DateTime.now(),
                       );
-                      context.read<TournamentCubit>().addTournament(tournament).then((_) {
+                      context
+                          .read<TournamentsCubit>()
+                          .addTournament(tournament)
+                          .then((_) {
                         Navigator.pop(context);
                       });
                     },

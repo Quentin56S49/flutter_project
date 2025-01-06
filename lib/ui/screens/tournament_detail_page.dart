@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/models/tournament.dart';
+import '../components/tournament_components/add_games_widget/add_game_widget.dart';
 import 'add_player_page.dart';
 
 class TournamentDetail extends StatelessWidget {
@@ -28,6 +29,7 @@ class TournamentDetail extends StatelessWidget {
               style: TextStyle(fontSize: 16.0),
             ),
           ),
+          AddGameWidget(),
           SizedBox(height: 16.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),

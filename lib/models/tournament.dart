@@ -7,7 +7,7 @@ class Tournament {
   String description;
   DateTime date;
   List<Player> players;
-  List<Game> games;
+  List<Game> games = [];
   List<Match> matches;
 
   Tournament({
@@ -19,4 +19,24 @@ class Tournament {
     this.games = const [],
     this.matches = const [],
   });
+
+  void addPlayer(Player player) {
+    players.add(player);
+  }
+
+  void addGame(Game game) {
+    games.add(game);
+  }
+
+  copyWith({required List<Game> games}) {
+    return Tournament(
+      id: id,
+      title: title,
+      description: description,
+      date: date,
+      players: players,
+      games: games,
+      matches: matches,
+    );
+  }
 }

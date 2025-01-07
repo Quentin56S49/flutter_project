@@ -36,7 +36,6 @@ class _AddMatchPageState extends State<AddMatchPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Sélection du jeu
             DropdownButtonFormField<Game>(
               decoration: InputDecoration(
                 labelText: 'Sélectionnez un jeu',
@@ -58,8 +57,6 @@ class _AddMatchPageState extends State<AddMatchPage> {
               },
             ),
             const SizedBox(height: 16.0),
-
-            // Description du match
             TextFormField(
               controller: _descriptionController,
               decoration: InputDecoration(
@@ -70,8 +67,6 @@ class _AddMatchPageState extends State<AddMatchPage> {
               ),
             ),
             const SizedBox(height: 16.0),
-
-            // Sélection du vainqueur
             DropdownButtonFormField<Player>(
               decoration: InputDecoration(
                 labelText: 'Sélectionnez le vainqueur',
@@ -93,8 +88,6 @@ class _AddMatchPageState extends State<AddMatchPage> {
               },
             ),
             const SizedBox(height: 16.0),
-
-            // Sélection des participants
             ExpansionTile(
               title: const Text('Sélectionnez les participants'),
               children: players.map((player) {
@@ -114,8 +107,6 @@ class _AddMatchPageState extends State<AddMatchPage> {
               }).toList(),
             ),
             const SizedBox(height: 16.0),
-
-            // Bouton de validation
             SizedBox(
               width: double.infinity,
               height: 50,

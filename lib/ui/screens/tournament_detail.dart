@@ -16,7 +16,6 @@ class TournamentDetail extends StatelessWidget {
         backgroundColor: Colors.deepPurple,
       ),
       body: BlocBuilder<TournamentCubit, Tournament>(builder: (context, state) {
-        context.read<TournamentCubit>().setTournament(tournament);
         return Column(
           children: [
             Padding(

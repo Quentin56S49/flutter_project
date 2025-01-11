@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/models/tournament.dart';
-
+import 'package:uuid/uuid.dart';
 import '../../blocs/tournaments_cubit.dart';
 
 class AddTournamentPage extends StatefulWidget {
-  const AddTournamentPage({super.key});
+  AddTournamentPage({super.key});
 
   @override
   _AddTournamentScreenState createState() => _AddTournamentScreenState();
@@ -14,6 +14,7 @@ class AddTournamentPage extends StatefulWidget {
 class _AddTournamentScreenState extends State<AddTournamentPage> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final Uuid _uuid = Uuid();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +78,7 @@ class _AddTournamentScreenState extends State<AddTournamentPage> {
                     ),
                     onPressed: () {
                       final tournament = Tournament(
-                        id: 0,
+                        id: _uuid.v4(),
                         title: _titleController.text,
                         description: _descriptionController.text,
                         date: DateTime.now(),

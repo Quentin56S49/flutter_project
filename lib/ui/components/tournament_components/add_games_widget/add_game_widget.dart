@@ -36,7 +36,7 @@ class AddGameWidget extends StatelessWidget {
             indent: 30,
             endIndent: 30,
           ),
-          context.read<TournamentCubit>().state.games.isEmpty
+          state.games.isEmpty
               ? Center(child: Text('Aucun jeu ajouté'))
               : SingleChildScrollView(
                   scrollDirection: Axis.horizontal,

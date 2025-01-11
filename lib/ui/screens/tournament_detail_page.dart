@@ -22,7 +22,7 @@ class TournamentDetail extends StatelessWidget {
             title: Text(state.title),
             backgroundColor: Colors.deepPurple,
           ),
-          body: Column(
+          body: ListView( // Utilisation de ListView
             children: [
               Container(
                 width: double.infinity,
@@ -41,15 +41,7 @@ class TournamentDetail extends StatelessWidget {
               const AddPlayerWidget(),
               AddMatchWidget(tournament: state),
               if (state.matchs.isNotEmpty)
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: state.matchs.length,
-                    itemBuilder: (context, index) {
-                      final match = state.matchs[index];
-                      return MatchWidget(match: match);
-                    },
-                  ),
-                )
+                ...state.matchs.map((match) => MatchWidget(match: match)).toList()
               else
                 const Center(child: Text('Aucun match ajouté')),
             ],

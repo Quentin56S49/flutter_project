@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_project/blocs/tournament_cubit.dart';
 import 'package:flutter_project/models/tournament.dart';
 
 class TournamentWidget extends StatelessWidget {
@@ -50,6 +52,7 @@ class TournamentWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
+                  context.read<TournamentCubit>().setTournament(tournament);
                   Navigator.pushNamed(context, '/detail-tournament',
                       arguments: tournament);
                 },

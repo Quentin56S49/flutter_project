@@ -10,16 +10,18 @@ import 'package:flutter_project/ui/screens/tournament_detail.dart';
 import 'package:flutter_project/ui/screens/tournament_page.dart';
 
 void main() {
+  final TournamentService _tournamentService = TournamentService();
   final TournamentsCubit tournamentsCubit =
-      TournamentsCubit(TournamentService());
+      TournamentsCubit(_tournamentService);
   final GameCubit gameCubit = GameCubit();
   final Tournament tournament = Tournament(
     title: 'PlaceHolder',
     description: 'PlaceHolder',
-    id: 0,
+    id: '',
     date: DateTime.now(),
   );
-  final TournamentCubit tournamentCubit = TournamentCubit(tournament);
+  final TournamentCubit tournamentCubit =
+      TournamentCubit(tournament, _tournamentService);
 
   runApp(
     MultiBlocProvider(

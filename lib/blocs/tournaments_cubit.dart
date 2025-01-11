@@ -7,6 +7,11 @@ class TournamentsCubit extends Cubit<List<Tournament>> {
 
   TournamentsCubit(this._tournamentService) : super([]);
 
+  Future<void> loadTournaments() async {
+    List<Tournament> tournaments = await _tournamentService.loadTournaments();
+    emit(tournaments);
+  }
+
   Future<void> fetchTournaments() async {
     try {
       final tournaments = await _tournamentService.getTournaments();

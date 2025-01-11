@@ -6,8 +6,19 @@ import 'package:flutter_project/ui/components/tournament_components/tournament_w
 import '../../models/tournament.dart';
 import '../../ui/screens/add_tournament_page.dart';
 
-class TournamentPage extends StatelessWidget {
+class TournamentPage extends StatefulWidget {
   const TournamentPage({super.key});
+
+  @override
+  _TournamentPageState createState() => _TournamentPageState();
+}
+
+class _TournamentPageState extends State<TournamentPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<TournamentsCubit>().loadTournaments();
+  }
 
   @override
   Widget build(BuildContext context) {

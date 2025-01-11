@@ -38,7 +38,8 @@ class _AddMatchPageState extends State<AddMatchPage> {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: viewportConstraints.maxWidth),
+              constraints:
+                  BoxConstraints(maxWidth: viewportConstraints.maxWidth),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -75,7 +76,6 @@ class _AddMatchPageState extends State<AddMatchPage> {
                       },
                     ),
                     const SizedBox(height: 16.0),
-
                     TextFormField(
                       controller: _descriptionController,
                       decoration: InputDecoration(
@@ -92,7 +92,6 @@ class _AddMatchPageState extends State<AddMatchPage> {
                       },
                     ),
                     const SizedBox(height: 16.0),
-
                     DropdownButtonFormField<Player>(
                       decoration: InputDecoration(
                         labelText: 'Sélectionnez le vainqueur',
@@ -124,7 +123,6 @@ class _AddMatchPageState extends State<AddMatchPage> {
                       },
                     ),
                     const SizedBox(height: 16.0),
-
                     ExpansionTile(
                       title: const Text('Sélectionnez les participants'),
                       children: players.map((player) {
@@ -144,7 +142,6 @@ class _AddMatchPageState extends State<AddMatchPage> {
                       }).toList(),
                     ),
                     const SizedBox(height: 16.0),
-
                     SizedBox(
                       width: double.infinity,
                       height: 50,
@@ -177,12 +174,13 @@ class _AddMatchPageState extends State<AddMatchPage> {
                               final match = Match(
                                 game: _selectedGame!,
                                 players: _selectedPlayers,
-                                tournament: widget.tournament,
                                 description: _descriptionController.text,
                                 vainqueur: _selectedWinner!,
                               );
                               context.read<TournamentCubit>().addMatch(match);
-                              context.read<TournamentsCubit>().fetchTournaments();
+                              context
+                                  .read<TournamentsCubit>()
+                                  .fetchTournaments();
                               Navigator.pop(context);
                             }
                           },

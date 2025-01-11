@@ -46,4 +46,34 @@ class Tournament {
       matchs: matchs ?? this.matchs,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'date': date.toIso8601String(),
+      'players': players.map((player) => player.toJson()).toList(),
+      'games': games.map((game) => game.toJson()).toList(),
+      'matchs': matchs.map((match) => match.toJson()).toList(),
+    };
+  }
+
+  factory Tournament.fromJson(Map<String, dynamic> json) {
+    print(json['games']);
+    return Tournament(
+      id: json['id'],
+      title: json['title'],
+      description: json['description'],
+      date: DateTime.parse(json['date']),
+      players: (json['players'] as List)
+          .map((player) => Player.fromJson(player))
+          .toList(),
+      games:
+          (json['games'] as List).map((game) => Game.fromJson(game)).toList(),
+      matchs: (json['matchs'] as List)
+          .map((match) => Match.fromJson(match))
+          .toList(),
+    );
+  }
 }

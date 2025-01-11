@@ -1,11 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_project/models/tournament.dart';
 import 'package:flutter_project/service/tournament_service.dart';
-import 'package:uuid/uuid.dart';
 
 class TournamentsCubit extends Cubit<List<Tournament>> {
   final TournamentService _tournamentService;
-  final Uuid _uuid = Uuid();
 
   TournamentsCubit(this._tournamentService) : super([]);
 

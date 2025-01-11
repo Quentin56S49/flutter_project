@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/blocs/tournament_cubit.dart';
+import 'package:flutter_project/blocs/tournaments_cubit.dart';
 import 'package:flutter_project/models/player.dart';
 
 class AddPlayerPage extends StatelessWidget {
@@ -28,10 +29,10 @@ class AddPlayerPage extends StatelessWidget {
                   TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(
-                        labelText: 'Nom',
-                        border: OutlineInputBorder(),
-                        filled: true,
-                        fillColor: Colors.grey[200],
+                      labelText: 'Nom',
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.grey[200],
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -44,10 +45,10 @@ class AddPlayerPage extends StatelessWidget {
                   TextFormField(
                     controller: _pseudoController,
                     decoration: InputDecoration(
-                        labelText: 'Pseudo',
-                        border: OutlineInputBorder(),
-                        filled: true,
-                        fillColor: Colors.grey[200],
+                      labelText: 'Pseudo',
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Colors.grey[200],
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -56,7 +57,7 @@ class AddPlayerPage extends StatelessWidget {
                       return null;
                     },
                   ),
-                  SizedBox(height: 32.0), 
+                  SizedBox(height: 32.0),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: SizedBox(
@@ -92,9 +93,10 @@ class AddPlayerPage extends StatelessWidget {
                                 name: _nameController.text,
                                 pseudo: _pseudoController.text,
                               );
+                              context.read<TournamentCubit>().addPlayer(player);
                               context
-                                  .read<TournamentCubit>()
-                                  .addPlayer(player);
+                                  .read<TournamentsCubit>()
+                                  .fetchTournaments();
                               Navigator.pop(context);
                             }
                           },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/blocs/tournament_cubit.dart';
+import 'package:flutter_project/blocs/tournaments_cubit.dart';
 import 'package:flutter_project/models/game.dart';
 import 'package:flutter_project/models/match.dart';
 import 'package:flutter_project/models/player.dart';
@@ -47,7 +48,11 @@ class _AddMatchPageState extends State<AddMatchPage> {
               items: games.map((game) {
                 return DropdownMenuItem<Game>(
                   value: game,
-                  child: Text(game.title),
+                  child: Text(
+                    game.title,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 );
               }).toList(),
               onChanged: (game) {
@@ -147,6 +152,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
                         vainqueur: _selectedWinner!,
                       );
                       context.read<TournamentCubit>().addMatch(match);
+                      context.read<TournamentsCubit>().fetchTournaments();
                       Navigator.pop(context);
                     }
                   },

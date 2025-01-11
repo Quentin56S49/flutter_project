@@ -5,16 +5,14 @@ import 'package:flutter_project/blocs/tournament_cubit.dart';
 import 'package:flutter_project/blocs/tournaments_cubit.dart';
 import 'package:flutter_project/models/tournament.dart';
 import 'package:flutter_project/service/tournament_service.dart';
-import 'package:flutter_project/ui/screens/add_match_page.dart';
 import 'package:flutter_project/ui/screens/add_player_page.dart';
 import 'package:flutter_project/ui/screens/search_game_page.dart';
 import 'package:flutter_project/ui/screens/tournament_detail_page.dart';
 import 'package:flutter_project/ui/screens/tournament_page.dart';
 
 void main() {
-  final TournamentService _tournamentService = TournamentService();
-  final TournamentsCubit tournamentsCubit =
-      TournamentsCubit(_tournamentService);
+  final TournamentService tournamentService = TournamentService();
+  final TournamentsCubit tournamentsCubit = TournamentsCubit(tournamentService);
   final GameCubit gameCubit = GameCubit();
   final Tournament tournament = Tournament(
     title: 'PlaceHolder',
@@ -23,7 +21,7 @@ void main() {
     date: DateTime.now(),
   );
   final TournamentCubit tournamentCubit =
-      TournamentCubit(tournament, _tournamentService);
+      TournamentCubit(tournament, tournamentService);
 
   runApp(
     MultiBlocProvider(
@@ -52,7 +50,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const TournamentPage(),
         '/search-game': (context) => const SearchGamePage(),
-        '/add-player' : (context) => const AddPlayerPage(),
+        '/add-player': (context) => const AddPlayerPage(),
       },
       onGenerateRoute: (settings) {
         if (settings.name == '/detail-tournament') {

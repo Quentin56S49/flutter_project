@@ -21,6 +21,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
   Player? _selectedWinner;
   final _descriptionController = TextEditingController();
   List<Player> _selectedPlayers = [];
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,143 +33,176 @@ class _AddMatchPageState extends State<AddMatchPage> {
         title: const Text('Ajouter un match'),
         backgroundColor: Colors.deepPurple,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DropdownButtonFormField<Game>(
-              decoration: InputDecoration(
-                labelText: 'Sélectionnez un jeu',
-                border: OutlineInputBorder(),
-                filled: true,
-                fillColor: Colors.grey[200],
-              ),
-              value: _selectedGame,
-              items: games.map((game) {
-                return DropdownMenuItem<Game>(
-                  value: game,
-                  child: Text(
-                    game.title,
-                    softWrap: true,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                );
-              }).toList(),
-              onChanged: (game) {
-                setState(() {
-                  _selectedGame = game;
-                });
-              },
-            ),
-            const SizedBox(height: 16.0),
-            TextFormField(
-              controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: 'Description du match',
-                border: OutlineInputBorder(),
-                filled: true,
-                fillColor: Colors.grey[200],
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            DropdownButtonFormField<Player>(
-              decoration: InputDecoration(
-                labelText: 'Sélectionnez le vainqueur',
-                border: OutlineInputBorder(),
-                filled: true,
-                fillColor: Colors.grey[200],
-              ),
-              value: _selectedWinner,
-              items: players.map((player) {
-                return DropdownMenuItem<Player>(
-                  value: player,
-                  child: Text(player.pseudo),
-                );
-              }).toList(),
-              onChanged: (player) {
-                setState(() {
-                  _selectedWinner = player;
-                });
-              },
-            ),
-            const SizedBox(height: 16.0),
-            ExpansionTile(
-              title: const Text('Sélectionnez les participants'),
-              children: players.map((player) {
-                return CheckboxListTile(
-                  title: Text(player.pseudo),
-                  value: _selectedPlayers.contains(player),
-                  onChanged: (bool? value) {
-                    setState(() {
-                      if (value != null && value) {
-                        _selectedPlayers.add(player);
-                      } else {
-                        _selectedPlayers.remove(player);
-                      }
-                    });
-                  },
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 16.0),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.pink[300]!, Colors.pink[700]!],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 4,
-                      offset: Offset(0, 2),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints viewportConstraints) {
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: viewportConstraints.maxWidth),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DropdownButtonFormField<Game>(
+                      decoration: InputDecoration(
+                        labelText: 'Sélectionnez un jeu',
+                        border: const OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                      value: _selectedGame,
+                      isExpanded: true,
+                      items: games.map((game) {
+                        return DropdownMenuItem<Game>(
+                          value: game,
+                          child: Text(
+                            game.title,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (game) {
+                        setState(() {
+                          _selectedGame = game;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Veuillez sélectionner un jeu';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16.0),
+
+                    TextFormField(
+                      controller: _descriptionController,
+                      decoration: InputDecoration(
+                        labelText: 'Description du match',
+                        border: const OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Veuillez entrer une description';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16.0),
+
+                    DropdownButtonFormField<Player>(
+                      decoration: InputDecoration(
+                        labelText: 'Sélectionnez le vainqueur',
+                        border: const OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                      value: _selectedWinner,
+                      isExpanded: true,
+                      items: players.map((player) {
+                        return DropdownMenuItem<Player>(
+                          value: player,
+                          child: Text(
+                            player.pseudo,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (player) {
+                        setState(() {
+                          _selectedWinner = player;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Veuillez sélectionner un vainqueur';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16.0),
+
+                    ExpansionTile(
+                      title: const Text('Sélectionnez les participants'),
+                      children: players.map((player) {
+                        return CheckboxListTile(
+                          title: Text(player.pseudo),
+                          value: _selectedPlayers.contains(player),
+                          onChanged: (bool? value) {
+                            setState(() {
+                              if (value != null && value) {
+                                _selectedPlayers.add(player);
+                              } else {
+                                _selectedPlayers.remove(player);
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(height: 16.0),
+
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [Colors.pink[300]!, Colors.pink[700]!],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            shadowColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              final match = Match(
+                                game: _selectedGame!,
+                                players: _selectedPlayers,
+                                tournament: widget.tournament,
+                                description: _descriptionController.text,
+                                vainqueur: _selectedWinner!,
+                              );
+                              context.read<TournamentCubit>().addMatch(match);
+                              context.read<TournamentsCubit>().fetchTournaments();
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: const Text(
+                            'Ajouter',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () {
-                    if (_selectedGame != null &&
-                        _selectedWinner != null &&
-                        _descriptionController.text.isNotEmpty &&
-                        _selectedPlayers.isNotEmpty) {
-                      final match = Match(
-                        game: _selectedGame!,
-                        players: _selectedPlayers,
-                        tournament: widget.tournament,
-                        description: _descriptionController.text,
-                        vainqueur: _selectedWinner!,
-                      );
-                      context.read<TournamentCubit>().addMatch(match);
-                      context.read<TournamentsCubit>().fetchTournaments();
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: const Text(
-                    'Ajouter',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

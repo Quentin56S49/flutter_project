@@ -25,11 +25,9 @@ class TournamentService {
   }
 
   Future<void> updateTournament(Tournament tournament) async {
-    int i = 0;
     final index = _tournaments.indexWhere((t) => t.id == tournament.id);
     if (index != -1) {
       _tournaments[index] = tournament;
-      i++;
     }
   }
 

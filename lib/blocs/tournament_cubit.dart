@@ -28,6 +28,7 @@ class TournamentCubit extends Cubit<Tournament> {
   void addPlayer(Player player) {
     final updatedPlayers = List<Player>.from(state.players)..add(player);
     final updatedTournament = state.copyWith(players: updatedPlayers);
+    _tournamentService.updateTournament(updatedTournament);
     emit(updatedTournament);
   }
 
@@ -35,6 +36,7 @@ class TournamentCubit extends Cubit<Tournament> {
     final updatedTournament = state.copyWith(
       matchs: [...state.matchs, match],
     );
+    _tournamentService.updateTournament(updatedTournament);
     emit(updatedTournament);
   }
 }

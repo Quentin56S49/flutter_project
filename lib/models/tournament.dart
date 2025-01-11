@@ -1,4 +1,5 @@
 import 'package:flutter_project/models/game.dart';
+import 'package:flutter_project/models/match.dart';
 import 'package:flutter_project/models/player.dart';
 
 class Tournament {
@@ -8,7 +9,7 @@ class Tournament {
   DateTime date;
   List<Player> players;
   List<Game> games = [];
-  List<Match> matches;
+  List<Match> matchs;
 
   Tournament({
     required this.id,
@@ -17,7 +18,7 @@ class Tournament {
     required this.date,
     this.players = const [],
     this.games = const [],
-    this.matches = const [],
+    this.matchs = const [],
   });
 
   void addPlayer(Player player) {
@@ -29,15 +30,20 @@ class Tournament {
   }
 
   Tournament copyWith(
-      {String? id, String? title, String? description, List<Game>? games}) {
+      {String? id,
+      String? title,
+      String? description,
+      List<Game>? games,
+      List<Player>? players,
+      List<Match>? matchs}) {
     return Tournament(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       date: date,
-      players: players,
+      players: players ?? this.players,
       games: games ?? this.games,
-      matches: matches,
+      matchs: matchs ?? this.matchs,
     );
   }
 }

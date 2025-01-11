@@ -19,7 +19,10 @@ class _AddTournamentScreenState extends State<AddTournamentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Ajouter des tournois')),
+      appBar: AppBar(
+        title: Text('Ajouter des tournois'),
+        backgroundColor: Colors.deepPurple,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -1,7 +1,6 @@
 import 'package:flutter_project/models/tournament.dart';
 
 class TournamentService {
-
   final List<Tournament> _tournaments = [];
 
   Future<void> addTournament(Tournament tournament) async {
@@ -9,10 +8,9 @@ class TournamentService {
       await Future.delayed(Duration(milliseconds: 500));
 
       _tournaments.add(tournament);
-
-      print('Tournoi créé : ${tournament.title}');
     } catch (error) {
-      throw TournamentCreationFailure('Erreur lors de la création du tournoi: ${error.toString()}');
+      throw TournamentCreationFailure(
+          'Erreur lors de la création du tournoi: ${error.toString()}');
     }
   }
 
@@ -21,10 +19,17 @@ class TournamentService {
     return _tournaments;
   }
 
+  Future<Tournament> getTournamentById(int id) async {
+    final index = _tournaments.indexWhere((t) => t.id == id);
+    return _tournaments[index];
+  }
+
   Future<void> updateTournament(Tournament tournament) async {
+    int i = 0;
     final index = _tournaments.indexWhere((t) => t.id == tournament.id);
     if (index != -1) {
       _tournaments[index] = tournament;
+      i++;
     }
   }
 

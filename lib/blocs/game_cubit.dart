@@ -11,7 +11,7 @@ class GameCubit extends Cubit<List<Game>> {
   }
 
   void addGame(Game game) {
-    state.add(game);
-    emit([]);
+    final updatedGames = List<Game>.from(state)..add(game);
+    emit(updatedGames);
   }
 }

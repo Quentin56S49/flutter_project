@@ -23,7 +23,7 @@ class GameService {
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
-      return data.map((json) => Game.fromJson(json)).toList();
+      return data.map((json) => Game.fromJsonAPI(json)).toList();
     } else {
       throw Exception('Failed to load games');
     }

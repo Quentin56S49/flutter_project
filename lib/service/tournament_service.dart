@@ -1,17 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter_project/models/tournament.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TournamentService {
   final List<Tournament> _tournaments = [];
 
-  Future<void> addTournament(Tournament tournament) async {
-    try {
-      await Future.delayed(Duration(milliseconds: 500));
-
-      _tournaments.add(tournament);
-    } catch (error) {
-      throw TournamentCreationFailure(
-          'Erreur lors de la création du tournoi: ${error.toString()}');
+  Future<List<Tournament>> loadTournaments() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> listJson = prefs.getStringList('tournaments') ?? [];
+    for (final String json in listJson) {
+      _tournaments.add(Tournament.fromJson(jsonDecode(json)));
     }
+    return _tournaments;
+  }
+
+  Future<void> addTournament(Tournament tournament) async {
+    _tournaments.add(tournament);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> listJson = [];
+    for (var tournament in _tournaments) {
+      listJson.add(jsonEncode(tournament.toJson()));
+    }
+    prefs.setStringList('tournaments', listJson);
   }
 
   Future<List<Tournament>> getTournaments() async {
@@ -29,14 +40,21 @@ class TournamentService {
     if (index != -1) {
       _tournaments[index] = tournament;
     }
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> listJson = [];
+    for (var tournament in _tournaments) {
+      listJson.add(jsonEncode(tournament.toJson()));
+    }
+    prefs.setStringList('tournaments', listJson);
   }
 
   Future<void> deleteTournament(int tournamentId) async {
     _tournaments.removeWhere((t) => t.id == tournamentId);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String> listJson = [];
+    for (var tournament in _tournaments) {
+      listJson.add(jsonEncode(tournament.toJson()));
+    }
+    prefs.setStringList('tournaments', listJson);
   }
-}
-
-class TournamentCreationFailure implements Exception {
-  final String message;
-  TournamentCreationFailure(this.message);
 }

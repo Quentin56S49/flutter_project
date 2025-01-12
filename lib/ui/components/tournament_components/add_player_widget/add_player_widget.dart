@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/blocs/tournament_cubit.dart';
 import 'package:flutter_project/models/tournament.dart';
+import 'package:flutter_project/ui/components/tournament_components/information_widget/information_widget.dart';
 
 class AddPlayerWidget extends StatelessWidget {
   const AddPlayerWidget({super.key});
@@ -37,7 +38,7 @@ class AddPlayerWidget extends StatelessWidget {
             endIndent: 30,
           ),
           context.read<TournamentCubit>().state.players.isEmpty
-              ? Center(child: Text('Aucun joueur ajouté'))
+              ? InformationWidget(information: 'Aucun joueurs ajouté')
               : SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/models/tournament.dart';
 import 'package:flutter_project/ui/components/tournament_components/add_player_widget/add_player_widget.dart';
 import 'package:flutter_project/blocs/tournaments_cubit.dart';
+import 'package:flutter_project/ui/components/tournament_components/information_widget/information_widget.dart';
 
 import '../../blocs/tournament_cubit.dart';
 import '../components/tournament_components/add_games_widget/add_game_widget.dart';
@@ -57,7 +58,7 @@ class TournamentDetail extends StatelessWidget {
                     .map((match) => MatchWidget(match: match))
                     .toList()
               else
-                const Center(child: Text('Aucun match ajouté')),
+                InformationWidget(information: 'Aucun match ajouté'),
             ],
           ),
         );

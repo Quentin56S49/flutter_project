@@ -59,8 +59,6 @@ class TournamentWidget extends StatelessWidget {
                 },
                 child: const Icon(Icons.arrow_forward_ios),
               )
-            ]
-        )
-    );
+            ]));
   }
 }

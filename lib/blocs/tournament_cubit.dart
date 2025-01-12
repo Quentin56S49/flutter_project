@@ -39,4 +39,28 @@ class TournamentCubit extends Cubit<Tournament> {
     _tournamentService.updateTournament(updatedTournament);
     emit(updatedTournament);
   }
+
+  void deletePlayer(String playerPseudo) {
+    final updatedPlayers = List<Player>.from(state.players)
+      ..removeWhere((player) => player.pseudo == playerPseudo);
+    final updatedTournament = state.copyWith(players: updatedPlayers);
+    _tournamentService.updateTournament(updatedTournament);
+    emit(updatedTournament);
+  }
+
+  void deleteGame(String gameTitle) {
+    final updatedGames = List<Game>.from(state.games)
+      ..removeWhere((game) => game.title == gameTitle);
+    final updatedTournament = state.copyWith(games: updatedGames);
+    _tournamentService.updateTournament(updatedTournament);
+    emit(updatedTournament);
+  }
+
+  void deleteMatch(String matchId) {
+    final updatedMatchs = List<Match>.from(state.matchs)
+      ..removeWhere((match) => match.id == matchId);
+    final updatedTournament = state.copyWith(matchs: updatedMatchs);
+    _tournamentService.updateTournament(updatedTournament);
+    emit(updatedTournament);
+  }
 }

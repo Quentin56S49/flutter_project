@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/blocs/tournaments_cubit.dart';
 import 'package:flutter_project/models/game.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_project/blocs/tournament_cubit.dart';
 
 class GameWidget extends StatelessWidget {
   final Game game;
@@ -28,15 +31,30 @@ class GameWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(
-              game.title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              softWrap: true,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    game.title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context.read<TournamentCubit>().deleteGame(game.title);
+                    context.read<TournamentsCubit>().fetchTournaments();
+                  },
+                  icon: const Icon(Icons.delete),
+                  color: Colors.red,
+                ),
+              ],
             ),
           ),
           ClipRRect(

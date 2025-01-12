@@ -34,4 +34,15 @@ class TournamentsCubit extends Cubit<List<Tournament>> {
       emit(state);
     }
   }
+
+  Future<void> deleteTournament(String tournamentId) async {
+    try {
+      await _tournamentService.deleteTournament(tournamentId);
+      final updatedTournaments = List<Tournament>.from(state)
+        ..removeWhere((tournament) => tournament.id == tournamentId);
+      emit(updatedTournaments);
+    } catch (e) {
+      emit(state);
+    }
+  }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_project/models/game.dart';
 import 'package:flutter_project/models/match.dart';
 import 'package:flutter_project/models/player.dart';
 import 'package:flutter_project/models/tournament.dart';
+import 'package:uuid/uuid.dart';
 
 class AddMatchPage extends StatefulWidget {
   final Tournament tournament;
@@ -22,6 +23,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
   final _descriptionController = TextEditingController();
   List<Player> _selectedPlayers = [];
   final _formKey = GlobalKey<FormState>();
+  final Uuid _uuid = Uuid();
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +174,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               final match = Match(
+                                id: _uuid.v4(),
                                 game: _selectedGame!,
                                 players: _selectedPlayers,
                                 description: _descriptionController.text,

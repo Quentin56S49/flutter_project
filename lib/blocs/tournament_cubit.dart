@@ -19,25 +19,32 @@ class TournamentCubit extends Cubit<Tournament> {
   }
 
   void addGame(Game game) {
-    final updatedGames = List<Game>.from(state.games)..add(game);
-    final updatedTournament = state.copyWith(games: updatedGames);
-    _tournamentService.updateTournament(updatedTournament);
-    emit(updatedTournament);
+    if (!state.games.any((existingGame) => existingGame.title == game.title)) {
+      final updatedGames = List<Game>.from(state.games)..add(game);
+      final updatedTournament = state.copyWith(games: updatedGames);
+      _tournamentService.updateTournament(updatedTournament);
+      emit(updatedTournament);
+    }
   }
 
   void addPlayer(Player player) {
-    final updatedPlayers = List<Player>.from(state.players)..add(player);
-    final updatedTournament = state.copyWith(players: updatedPlayers);
-    _tournamentService.updateTournament(updatedTournament);
-    emit(updatedTournament);
+    if (!state.players
+        .any((existingPlayer) => existingPlayer.pseudo == player.pseudo)) {
+      final updatedPlayers = List<Player>.from(state.players)..add(player);
+      final updatedTournament = state.copyWith(players: updatedPlayers);
+      _tournamentService.updateTournament(updatedTournament);
+      emit(updatedTournament);
+    }
   }
 
   void addMatch(Match match) {
-    final updatedTournament = state.copyWith(
-      matchs: [...state.matchs, match],
-    );
-    _tournamentService.updateTournament(updatedTournament);
-    emit(updatedTournament);
+    if (!state.matchs.any((existingMatch) => existingMatch.id == match.id)) {
+      final updatedTournament = state.copyWith(
+        matchs: [...state.matchs, match],
+      );
+      _tournamentService.updateTournament(updatedTournament);
+      emit(updatedTournament);
+    }
   }
 
   void deletePlayer(String playerPseudo) {

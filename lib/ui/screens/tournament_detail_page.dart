@@ -53,32 +53,6 @@ class TournamentDetail extends StatelessWidget {
               const AddGameWidget(),
               const AddPlayerWidget(),
               AddMatchWidget(tournament: state),
-              const SizedBox(height: 16.0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Participants',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 8.0),
-                    if (state.players.isNotEmpty)
-                      Column(
-                        children: state.players.map((player) {
-                          return ListTile(
-                            title: Text(player.pseudo),
-                            trailing: Text('Score: ${player.score ?? 0}'),
-                          );
-                        }).toList(),
-                      )
-                    else
-                      const Text('Aucun participant pour le moment.'),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 16.0),
               if (state.matchs.isNotEmpty)
                 ...state.matchs
                     .map((match) => MatchWidget(match: match))

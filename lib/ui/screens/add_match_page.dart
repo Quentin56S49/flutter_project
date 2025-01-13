@@ -21,7 +21,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
   Game? _selectedGame;
   Player? _selectedWinner;
   final _descriptionController = TextEditingController();
-  List<Player> _selectedPlayers = [];
+  final List<Player> _selectedPlayers = [];
   final _formKey = GlobalKey<FormState>();
   final Uuid _uuid = Uuid();
 
@@ -41,7 +41,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
             padding: const EdgeInsets.all(16.0),
             child: ConstrainedBox(
               constraints:
-              BoxConstraints(maxWidth: viewportConstraints.maxWidth),
+                  BoxConstraints(maxWidth: viewportConstraints.maxWidth),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -108,10 +108,13 @@ class _AddMatchPageState extends State<AddMatchPage> {
                           key: ValueKey(player.pseudo),
                           value: player,
                           child: Text(
-                            '${player.pseudo} (${player.score ?? 0})',
+                            '${player.pseudo} (${player.score})',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              color: context.read<TournamentCubit>().selectedWinnerId == player.pseudo
+                              color: context
+                                          .read<TournamentCubit>()
+                                          .selectedWinnerId ==
+                                      player.pseudo
                                   ? Colors.green
                                   : Colors.black,
                             ),
@@ -122,7 +125,9 @@ class _AddMatchPageState extends State<AddMatchPage> {
                         setState(() {
                           _selectedWinner = player;
                         });
-                        context.read<TournamentCubit>().setSelectedWinnerId(player?.pseudo);
+                        context
+                            .read<TournamentCubit>()
+                            .setSelectedWinnerId(player?.pseudo);
                       },
                       validator: (value) {
                         if (value == null) {
@@ -136,7 +141,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
                       title: const Text('Sélectionnez les participants'),
                       children: players.map((player) {
                         return CheckboxListTile(
-                          title: Text('${player.pseudo} (${player.score ?? 0})'),
+                          title: Text('${player.pseudo} (${player.score})'),
                           value: _selectedPlayers.contains(player),
                           onChanged: (bool? value) {
                             setState(() {
@@ -191,8 +196,12 @@ class _AddMatchPageState extends State<AddMatchPage> {
                                 _selectedWinner!.score++;
                               });
                               context.read<TournamentCubit>().addMatch(match);
-                              context.read<TournamentsCubit>().fetchTournaments();
-                              context.read<TournamentCubit>().setSelectedWinnerId(null);
+                              context
+                                  .read<TournamentsCubit>()
+                                  .fetchTournaments();
+                              context
+                                  .read<TournamentCubit>()
+                                  .setSelectedWinnerId(null);
                               Navigator.pop(context);
                             }
                           },

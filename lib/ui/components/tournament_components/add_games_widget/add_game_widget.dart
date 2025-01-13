@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/blocs/tournament_cubit.dart';
 import 'package:flutter_project/models/tournament.dart';
 import 'package:flutter_project/ui/components/game_widget/game_widget.dart';
+import 'package:flutter_project/ui/components/tournament_components/information_widget/information_widget.dart';
 
 class AddGameWidget extends StatelessWidget {
   const AddGameWidget({super.key});
@@ -38,7 +39,9 @@ class AddGameWidget extends StatelessWidget {
             endIndent: 30,
           ),
           state.games.isEmpty
-              ? Center(child: Text('Aucun jeu ajouté'))
+              ? InformationWidget(
+                  information: 'Aucun jeu ajouté',
+                )
               : SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(

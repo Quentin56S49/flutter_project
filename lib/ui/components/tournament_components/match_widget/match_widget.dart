@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_project/blocs/tournament_cubit.dart';
+import 'package:flutter_project/blocs/tournaments_cubit.dart';
 import 'package:flutter_project/models/match.dart';
 
 class MatchWidget extends StatelessWidget {
@@ -21,8 +24,6 @@ class MatchWidget extends StatelessWidget {
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(8.0),
               bottomLeft: Radius.circular(8.0),
-              topRight: Radius.circular(8.0),
-              bottomRight: Radius.circular(8.0),
             ),
             child: Image.network(
               match.game.coverUrl,
@@ -34,21 +35,39 @@ class MatchWidget extends StatelessWidget {
           const SizedBox(width: 8.0),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Match : ${match.game.title}',
-                    style: const TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          match.game.title,
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          context.read<TournamentCubit>().deleteMatch(match.id);
+                          context.read<TournamentsCubit>().fetchTournaments();
+                        },
+                        icon: const Icon(Icons.delete),
+                        color: Colors.red,
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 8.0),
                   Text(
-                    'Description : ${match.description}',
+                    match.description,
                     style: const TextStyle(fontSize: 16.0),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8.0),
                   Text(

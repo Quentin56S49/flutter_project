@@ -48,7 +48,7 @@ class TournamentService {
     prefs.setStringList('tournaments', listJson);
   }
 
-  Future<void> deleteTournament(int tournamentId) async {
+  Future<void> deleteTournament(String tournamentId) async {
     _tournaments.removeWhere((t) => t.id == tournamentId);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final List<String> listJson = [];

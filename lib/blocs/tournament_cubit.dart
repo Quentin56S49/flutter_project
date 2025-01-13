@@ -4,6 +4,7 @@ import 'package:flutter_project/models/match.dart';
 import 'package:flutter_project/models/player.dart';
 import 'package:flutter_project/models/tournament.dart';
 import 'package:flutter_project/service/tournament_service.dart';
+
 class TournamentState {
   final Tournament tournament;
   final String? selectedWinnerId;
@@ -12,7 +13,7 @@ class TournamentState {
 
   TournamentState copyWith({Tournament? tournament, String? selectedWinnerId}) {
     return TournamentState(
-        tournament: tournament ??this.tournament,
+        tournament: tournament ?? this.tournament,
         selectedWinnerId: selectedWinnerId ?? this.selectedWinnerId);
   }
 
@@ -63,5 +64,4 @@ class TournamentCubit extends Cubit<Tournament> {
     _tournamentService.updateTournament(updatedTournament);
     emit(updatedTournament);
   }
-
 }

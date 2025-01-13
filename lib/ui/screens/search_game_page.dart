@@ -10,28 +10,73 @@ class SearchGamePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Game'),
-          backgroundColor: Colors.deepPurple,
-        ),
-        body: Column(children: [
-          TextField(
-            onChanged: (value) async {
-              context.read<GameCubit>().searchGames(value);
-            },
-            decoration: InputDecoration(
-              labelText: 'Nom du jeu',
+      appBar: AppBar(
+        title: Text('Rechercher un jeu'),
+        backgroundColor: Colors.deepPurple,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 6.0,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: TextField(
+                onChanged: (value) async {
+                  context.read<GameCubit>().searchGames(value);
+                },
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  labelText: 'Nom du jeu',
+                  prefixIcon: Icon(Icons.search),
+                ),
+              ),
             ),
-          ),
-          Expanded(child:
-              BlocBuilder<GameCubit, List<Game>>(builder: (context, state) {
-            return ListView(
-              shrinkWrap: true,
-              children: state.map((game) {
-                return GameCard(game: game);
-              }).toList(),
-            );
-          })),
-        ]));
+            const SizedBox(height: 16.0),
+            Expanded(
+              child: BlocBuilder<GameCubit, List<Game>?>(
+                builder: (context, state) {
+                  return AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: state == null
+                        ? Center(
+                            key: UniqueKey(),
+                            child: CircularProgressIndicator(),
+                          )
+                        : state.isEmpty
+                            ? Center(
+                                key: UniqueKey(),
+                                child: Text(
+                                  'Aucun jeu trouvé',
+                                  style: TextStyle(
+                                      fontSize: 16.0, color: Colors.grey),
+                                ),
+                              )
+                            : ListView.builder(
+                                key: UniqueKey(),
+                                itemCount: state.length,
+                                itemBuilder: (context, index) {
+                                  final game = state[index];
+                                  return GameCard(game: game);
+                                },
+                              ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

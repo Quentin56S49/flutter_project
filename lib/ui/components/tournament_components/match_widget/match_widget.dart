@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/blocs/tournament_cubit.dart';
@@ -19,16 +20,17 @@ class MatchWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Image du jeu
           ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(8.0),
               bottomLeft: Radius.circular(8.0),
             ),
-            child: Image.network(
-              match.game.coverUrl,
-              width: 100.0,
-              height: 100.0,
+            child: CachedNetworkImage(
+              width: 130,
+              imageUrl: match.game.coverUrl,
+              placeholder: (context, url) =>
+                  Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => Icon(Icons.error),
               fit: BoxFit.cover,
             ),
           ),

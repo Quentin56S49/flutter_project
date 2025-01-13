@@ -7,70 +7,77 @@ import 'package:flutter_project/models/game.dart';
 
 class GameCard extends StatelessWidget {
   final Game game;
+
   const GameCard({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(0),
+        borderRadius: BorderRadius.circular(12.0),
       ),
-      margin: const EdgeInsets.all(8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: 100,
-            height: 100,
-            margin: const EdgeInsets.only(right: 8),
-            child: CachedNetworkImage(
-              imageUrl: game.coverUrl,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-              fit: BoxFit.cover,
+      elevation: 4.0,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: CachedNetworkImage(
+                imageUrl: game.coverUrl,
+                placeholder: (context, url) =>
+                    Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                width: 80,
+                height: 80,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  game.title,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+            const SizedBox(width: 16.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    game.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  softWrap: true,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  game.description,
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.grey,
+                  const SizedBox(height: 8.0),
+                  Text(
+                    game.description,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                    softWrap: true,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  softWrap: true,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              context.read<TournamentCubit>().addGame(game);
-              context.read<TournamentsCubit>().fetchTournaments();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('${game.title} a été ajouté à la liste'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            },
-          ),
-        ],
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                context.read<TournamentCubit>().addGame(game);
+                context.read<TournamentsCubit>().fetchTournaments();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('${game.title} a été ajouté à la liste'),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

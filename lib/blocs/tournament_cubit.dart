@@ -105,7 +105,7 @@ class TournamentCubit extends Cubit<Tournament> {
     updatedPlayers[winnerIndex] = winner.copyWith(score: winner.score - 1);
 
     final updatedMatchs = List<Match>.from(state.matchs)
-      ..removeWhere((match) => match.id == match.id);
+      ..removeWhere((m) => m.id == match.id);
     final updatedTournament =
         state.copyWith(matchs: updatedMatchs, players: updatedPlayers);
     _tournamentService.updateTournament(updatedTournament);

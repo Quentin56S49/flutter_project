@@ -54,7 +54,7 @@ class MatchWidget extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          context.read<TournamentCubit>().deleteMatch(match.id);
+                          context.read<TournamentCubit>().deleteMatch(match);
                           context.read<TournamentsCubit>().fetchTournaments();
                         },
                         icon: const Icon(Icons.delete),

@@ -17,7 +17,6 @@ class TournamentState {
         selectedWinnerId: selectedWinnerId ?? this.selectedWinnerId);
   }
 
-  @override
   List<Object?> get props => [tournament, selectedWinnerId];
 }
 
@@ -73,14 +72,24 @@ class TournamentCubit extends Cubit<Tournament> {
   }
 
   void deletePlayer(String playerPseudo) {
+    final updatedMatchs = List<Match>.from(state.matchs)
+      ..removeWhere((match) =>
+          match.players.any((player) => player.pseudo == playerPseudo));
     final updatedPlayers = List<Player>.from(state.players)
       ..removeWhere((player) => player.pseudo == playerPseudo);
-    final updatedTournament = state.copyWith(players: updatedPlayers);
+    final updatedTournament =
+        state.copyWith(players: updatedPlayers, matchs: updatedMatchs);
     _tournamentService.updateTournament(updatedTournament);
     emit(updatedTournament);
   }
 
   void deleteGame(String gameTitle) {
+    final toDeleteMatch = List<Match>.from(state.matchs).where((match) {
+      return match.game.title == gameTitle;
+    }).toList();
+    for (var match in toDeleteMatch) {
+      deleteMatch(match);
+    }
     final updatedGames = List<Game>.from(state.games)
       ..removeWhere((game) => game.title == gameTitle);
     final updatedTournament = state.copyWith(games: updatedGames);
@@ -88,10 +97,17 @@ class TournamentCubit extends Cubit<Tournament> {
     emit(updatedTournament);
   }
 
-  void deleteMatch(String matchId) {
+  void deleteMatch(Match match) {
+    Player winner = match.vainqueur;
+    final updatedPlayers = List<Player>.from(state.players);
+    final winnerIndex =
+        updatedPlayers.indexWhere((player) => player.pseudo == winner.pseudo);
+    updatedPlayers[winnerIndex] = winner.copyWith(score: winner.score - 1);
+
     final updatedMatchs = List<Match>.from(state.matchs)
-      ..removeWhere((match) => match.id == matchId);
-    final updatedTournament = state.copyWith(matchs: updatedMatchs);
+      ..removeWhere((match) => match.id == match.id);
+    final updatedTournament =
+        state.copyWith(matchs: updatedMatchs, players: updatedPlayers);
     _tournamentService.updateTournament(updatedTournament);
     emit(updatedTournament);
   }

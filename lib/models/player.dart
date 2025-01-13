@@ -19,4 +19,12 @@ class Player {
       score: json['score'],
     );
   }
+
+  Player copyWith({String? name, String? pseudo, int? score}) {
+    return Player(
+      name: name ?? this.name,
+      pseudo: pseudo ?? this.pseudo,
+      score: score ?? this.score,
+    );
+  }
 }

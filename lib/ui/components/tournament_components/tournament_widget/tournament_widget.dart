@@ -10,55 +10,56 @@ class TournamentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
-          borderRadius: BorderRadius.circular(8),
-        ),
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      elevation: 4.0,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        tournament.title,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        tournament.description,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey,
-                        ),
-                        softWrap: true,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ]),
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    tournament.title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    softWrap: true,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    tournament.description,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                    softWrap: true,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
-              GestureDetector(
-                onTap: () {
-                  context.read<TournamentCubit>().setTournament(tournament);
-                  Navigator.pushNamed(context, '/detail-tournament',
-                      arguments: tournament);
-                },
-                child: const Icon(Icons.arrow_forward_ios),
-              )
-            ]));
+            ),
+            GestureDetector(
+              onTap: () {
+                context.read<TournamentCubit>().setTournament(tournament);
+                Navigator.pushNamed(context, '/detail-tournament',
+                    arguments: tournament);
+              },
+              child: const Icon(Icons.arrow_forward_ios),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

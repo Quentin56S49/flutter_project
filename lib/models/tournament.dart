@@ -35,7 +35,8 @@ class Tournament {
       String? description,
       List<Game>? games,
       List<Player>? players,
-      List<Match>? matchs}) {
+      List<Match>? matchs,
+      String? selectedWinnerId}) {
     return Tournament(
       id: id ?? this.id,
       title: title ?? this.title,

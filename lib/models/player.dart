@@ -1,13 +1,14 @@
 class Player {
   String name;
   String pseudo;
-
-  Player({required this.name, required this.pseudo});
+  int score;
+  Player({required this.name, required this.pseudo, this.score = 0});
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
       'pseudo': pseudo,
+      'score': score,
     };
   }
 
@@ -15,6 +16,7 @@ class Player {
     return Player(
       name: json['name'],
       pseudo: json['pseudo'],
+      score: json['score'],
     );
   }
 }

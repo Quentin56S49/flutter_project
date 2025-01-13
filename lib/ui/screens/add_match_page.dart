@@ -41,7 +41,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
             padding: const EdgeInsets.all(16.0),
             child: ConstrainedBox(
               constraints:
-                  BoxConstraints(maxWidth: viewportConstraints.maxWidth),
+              BoxConstraints(maxWidth: viewportConstraints.maxWidth),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -105,10 +105,16 @@ class _AddMatchPageState extends State<AddMatchPage> {
                       isExpanded: true,
                       items: players.map((player) {
                         return DropdownMenuItem<Player>(
+                          key: ValueKey(player.pseudo),
                           value: player,
                           child: Text(
-                            player.pseudo,
+                            '${player.pseudo} (${player.score ?? 0})',
                             overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: context.read<TournamentCubit>().selectedWinnerId == player.pseudo
+                                  ? Colors.green
+                                  : Colors.black,
+                            ),
                           ),
                         );
                       }).toList(),
@@ -116,6 +122,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
                         setState(() {
                           _selectedWinner = player;
                         });
+                        context.read<TournamentCubit>().setSelectedWinnerId(player?.pseudo);
                       },
                       validator: (value) {
                         if (value == null) {
@@ -129,7 +136,7 @@ class _AddMatchPageState extends State<AddMatchPage> {
                       title: const Text('Sélectionnez les participants'),
                       children: players.map((player) {
                         return CheckboxListTile(
-                          title: Text(player.pseudo),
+                          title: Text('${player.pseudo} (${player.score ?? 0})'),
                           value: _selectedPlayers.contains(player),
                           onChanged: (bool? value) {
                             setState(() {
@@ -180,10 +187,12 @@ class _AddMatchPageState extends State<AddMatchPage> {
                                 description: _descriptionController.text,
                                 vainqueur: _selectedWinner!,
                               );
+                              setState(() {
+                                _selectedWinner!.score++;
+                              });
                               context.read<TournamentCubit>().addMatch(match);
-                              context
-                                  .read<TournamentsCubit>()
-                                  .fetchTournaments();
+                              context.read<TournamentsCubit>().fetchTournaments();
+                              context.read<TournamentCubit>().setSelectedWinnerId(null);
                               Navigator.pop(context);
                             }
                           },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_project/blocs/tournament_cubit.dart';
 import 'package:flutter_project/models/tournament.dart';
+import 'package:flutter_project/ui/components/player_widget/player_widget.dart';
 import 'package:flutter_project/ui/components/tournament_components/information_widget/information_widget.dart';
 
 class AddPlayerWidget extends StatelessWidget {
@@ -47,20 +48,7 @@ class AddPlayerWidget extends StatelessWidget {
                         .state
                         .players
                         .map((player) {
-                      return Container(
-                        margin: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              player.pseudo,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
+                      return PlayerWidget(player: player);
                     }).toList(),
                   ),
                 ),
